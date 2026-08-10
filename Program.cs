@@ -6,10 +6,51 @@ string nombre = Console.ReadLine();
 Console.WriteLine($"el nombre del cajero es {nombre}");
 Console.WriteLine($"Bienvenido/a {nombre}. Caja abierta");
 
-//etapa 2
-Console.Write("Ingrese el nombre del producto: ");
-string nombreProducto = Console.ReadLine();
-Console.Write("Ingrese el precio del producto: ");
-decimal precioProducto = decimal.Parse(Console.ReadLine());
-Console.WriteLine($"El producto {nombreProducto} tiene un precio de {precioProducto}.");
+//etapa 3 
+decimal totalVenta = 0;
+int cantidadProductos = 0;
+string opcion = "";
+
+do
+{
+    // Mostrar el menú
+    Console.WriteLine("\n¿Qué desea hacer?");
+    Console.WriteLine("1 - Cargar un producto");
+    Console.WriteLine("2 - Cerrar la venta");
+    Console.Write("Seleccione una opción: ");
+    opcion = Console.ReadLine() ?? "";
+
+    // Evaluar la opción ingresada
+    switch (opcion)
+    {
+        case "1":
+            Console.Write("Ingrese el nombre del producto: ");
+            string nombreProducto = Console.ReadLine() ?? "";
+
+            Console.Write("Ingrese el precio del producto: ");
+            decimal precioProducto = decimal.Parse(Console.ReadLine() ?? "0");
+
+            // Acumular total y contador de productos
+            totalVenta += precioProducto;
+            cantidadProductos++;
+
+            Console.WriteLine($"Producto '{nombreProducto}' agregado exitosamente.");
+            break;
+
+        case "2":
+            Console.WriteLine("\nCerrando la venta...");
+            break;
+
+        default:
+            Console.WriteLine("Opción inválida. Por favor, intente de nuevo.");
+            break;
+    }
+
+} while (opcion != "2");
+
+// Al salir del ciclo (cerrar la venta), mostrar los totales
+Console.WriteLine("\n--- RESUMEN DE COMPRA ---");
+Console.WriteLine($"Cantidad de productos cargados: {cantidadProductos}");
+Console.WriteLine($"Total acumulado: ${totalVenta}");
+
 Console.ReadKey();
