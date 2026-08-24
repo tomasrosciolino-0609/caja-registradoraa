@@ -1,4 +1,8 @@
-﻿//estapa 1
+﻿const decimal DESCUENTO_ALTO = 0.10m;  
+const decimal DESCUENTO_MEDIO = 0.05m; 
+const decimal SIN_DESCUENTO = 0.00m;
+
+//estapa 1
 string NombreComercio = "lettera";
 Console.WriteLine($"{NombreComercio}");
 Console.Write("Ingrese el nombre de la persona que atiende en la caja: ");
@@ -30,7 +34,7 @@ do
             Console.Write("Ingrese el precio del producto: ");
             decimal precioProducto = decimal.Parse(Console.ReadLine() ?? "0");
 
-            // Acumular total y contador de productos
+            
             totalVenta += precioProducto;
             cantidadProductos++;
 
@@ -48,9 +52,28 @@ do
 
 } while (opcion != "2");
 
+decimal porcentajeAplicado = SIN_DESCUENTO;
+
+if (totalVenta > 50000)
+{
+    porcentajeAplicado = DESCUENTO_ALTO;
+}
+else if (totalVenta > 20000)
+{
+    porcentajeAplicado = DESCUENTO_MEDIO;
+}
+else
+{
+    porcentajeAplicado = SIN_DESCUENTO;
+}
+decimal montoDescuento = totalVenta * porcentajeAplicado;
+decimal totalFinal = totalVenta - montoDescuento;
+
 // Al salir del ciclo (cerrar la venta), mostrar los totales
 Console.WriteLine("\n--- RESUMEN DE COMPRA ---");
 Console.WriteLine($"Cantidad de productos cargados: {cantidadProductos}");
 Console.WriteLine($"Total acumulado: ${totalVenta}");
+Console.WriteLine($"Descuento aplicado ({porcentajeAplicado * 100}%): -${montoDescuento}");
+Console.WriteLine($"Total a pagar: ${totalFinal}");
 
 Console.ReadKey();
