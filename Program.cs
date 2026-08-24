@@ -103,10 +103,38 @@ do
 } while (medioPago != "1" && medioPago != "2" && medioPago != "3");
 
 
-Console.WriteLine("\n--- RESUMEN DE COMPRA ---");
-Console.WriteLine($"Cantidad de productos cargados: {cantidadProductos}");
-Console.WriteLine($"Total acumulado: ${totalVenta}");
-Console.WriteLine($"Descuento aplicado ({porcentajeAplicado * 100}%): -${montoDescuento}");
-Console.WriteLine($"Total a pagar: ${totalFinal}");
+decimal montoDescuentoEfectivo = 0;
+decimal montoRecargoCredito = 0;
+
+if (medioPago == "1")
+{
+    montoDescuentoEfectivo = totalConDescuento * DESCUENTO_EFECTIVO;
+}
+else if (medioPago == "3")
+{
+    montoRecargoCredito = totalConDescuento * RECARGO_CREDITO;
+}
+
+decimal totalDescuentoTotal = montoDescuento + montoDescuentoEfectivo;
+
+// Generación de línea divisoria con bucle for
+string linea = "";
+for (int i = 0; i < 30; i++)
+{
+    linea += "-";
+}
+
+Console.WriteLine();
+Console.WriteLine(linea);
+Console.WriteLine($"       {NombreComercio.ToUpper()}");
+Console.WriteLine(linea);
+Console.WriteLine($"Cajero: {nombre}");
+Console.WriteLine($"Productos: {cantidadProductos}");
+Console.WriteLine($"Subtotal: {totalVenta}");
+Console.WriteLine($"Descuento: {totalDescuentoTotal}");
+Console.WriteLine($"Recargo: {montoRecargoCredito}");
+Console.WriteLine(linea);
+Console.WriteLine($"TOTAL: {totalFinal}");
+Console.WriteLine(linea);
 
 Console.ReadKey();
