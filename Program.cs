@@ -2,7 +2,10 @@
 const decimal DESCUENTO_MEDIO = 0.05m; 
 const decimal SIN_DESCUENTO = 0.00m;
 
-//estapa 1
+const decimal DESCUENTO_EFECTIVO = 0.10m;
+const decimal RECARGO_CREDITO = 0.15m;
+
+
 string NombreComercio = "lettera";
 Console.WriteLine($"{NombreComercio}");
 Console.Write("Ingrese el nombre de la persona que atiende en la caja: ");
@@ -10,21 +13,21 @@ string nombre = Console.ReadLine();
 Console.WriteLine($"el nombre del cajero es {nombre}");
 Console.WriteLine($"Bienvenido/a {nombre}. Caja abierta");
 
-//etapa 3 
+
 decimal totalVenta = 0;
 int cantidadProductos = 0;
 string opcion = "";
 
 do
 {
-    // Mostrar el menú
+    
     Console.WriteLine("\n¿Qué desea hacer?");
     Console.WriteLine("1 - Cargar un producto");
     Console.WriteLine("2 - Cerrar la venta");
     Console.Write("Seleccione una opción: ");
     opcion = Console.ReadLine() ?? "";
 
-    // Evaluar la opción ingresada
+    
     switch (opcion)
     {
         case "1":
@@ -67,9 +70,39 @@ else
     porcentajeAplicado = SIN_DESCUENTO;
 }
 decimal montoDescuento = totalVenta * porcentajeAplicado;
-decimal totalFinal = totalVenta - montoDescuento;
+decimal totalConDescuento = totalVenta - montoDescuento;
 
-// Al salir del ciclo (cerrar la venta), mostrar los totales
+string medioPago = "";
+decimal totalFinal = totalConDescuento;
+
+do
+{
+    Console.WriteLine("\nMedio de pago:");
+    Console.WriteLine("1 - Efectivo");
+    Console.WriteLine("2 - Débito");
+    Console.WriteLine("3 - Crédito");
+    Console.Write("Seleccione una opción: ");
+    medioPago = Console.ReadLine() ?? "";
+
+    switch (medioPago)
+    {
+        case "1":
+            totalFinal = totalConDescuento - (totalConDescuento * DESCUENTO_EFECTIVO);
+            break;
+        case "2":
+            totalFinal = totalConDescuento;
+            break;
+        case "3":
+            totalFinal = totalConDescuento + (totalConDescuento * RECARGO_CREDITO);
+            break;
+        default:
+            Console.WriteLine("Opción inválida. Ingrese 1, 2 o 3.");
+            break;
+    }
+
+} while (medioPago != "1" && medioPago != "2" && medioPago != "3");
+
+
 Console.WriteLine("\n--- RESUMEN DE COMPRA ---");
 Console.WriteLine($"Cantidad de productos cargados: {cantidadProductos}");
 Console.WriteLine($"Total acumulado: ${totalVenta}");
